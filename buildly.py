@@ -24,7 +24,7 @@ def main():
         except Exception:
             use_buildno_file = False
     try:
-        commitno = subprocess.check_output(COMMITNO_CMD).strip()
+        commitno = subprocess.check_output(COMMITNO_CMD).strip().decode('ascii')
     except subprocess.CalledProcessError:
         commitno = 0
     r = subprocess.call(BUILD_CMD % (buildno, commitno))

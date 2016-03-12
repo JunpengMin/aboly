@@ -43,7 +43,7 @@ def main():
             log.warning('No build number')
             use_buildno_file = False
     try:
-        commitno = subprocess.check_output(COMMITNO_CMD).strip()
+        commitno = subprocess.check_output(COMMITNO_CMD).strip().decode('ascii')
     except subprocess.CalledProcessError:
         log.warning('No commit number')
         commitno = 0
