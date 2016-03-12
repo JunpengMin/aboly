@@ -1,0 +1,321 @@
+% Lengths.
+\newlength{\lyszbody}
+\newlength{\lyszchaptertitle}
+\newlength{\lyszsectiontitle}
+\newlength{\lyszsubsectiontitle}
+\newlength{\lyszpageno}
+
+\setlength{\lyszbody}{12pt}
+\setlength{\lyszchaptertitle}{16pt}
+\setlength{\lyszsectiontitle}{14pt}
+\setlength{\lyszsubsectiontitle}{13pt}
+\setlength{\lyszpageno}{10.5pt}
+
+
+% Page layout.
+\usepackage[
+  left=3.2cm,
+  right=3.2cm,
+  top=3.5cm,
+  bottom=3.5cm,
+]{geometry}
+
+
+% Packages.
+\usepackage{calc}
+\usepackage{enumitem}
+\usepackage{etoolbox}
+%\usepackage{xstring}
+\usepackage{graphicx}
+\usepackage{indentfirst}
+\usepackage[svgnames]{xcolor}
+\usepackage[normalem]{ulem}
+
+\usepackage[pagecolor=white, nopagecolor=white]{pagecolor}
+\usepackage{afterpage}
+\usepackage[scale=1.5]{ccicons}
+
+\usepackage{tikz}
+\usetikzlibrary{mindmap}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+
+% Fonts.
+
+% English, numerics, symbols.
+\usepackage{pifont}
+\usepackage[quiet]{fontspec}
+\defaultfontfeatures{Mapping=tex-text}
+\setmainfont[Ligatures=NoCommon]{Linux Libertine O}
+\setsansfont[Ligatures=NoCommon, Scale=MatchLowercase]{Linux Libertine O}
+
+\font\pagenofont = "Linux Libertine O" at \lyszpageno  % for page numbers
+
+% Pinyin. The second tone marks of "Linux Libertine O" is upside-down for the Chinese.
+% Besides, it seems conventional to use a Sans Serif font for pinyin. Also good for labeling.
+% The cover page's pinyin won't be typeset in this style.
+\newfontfamily{\ftpinyin}[Scale=0.86]{Source Han Sans SC}
+\newcommand{\lypy}[1]{\textnormal{\ftpinyin #1}}
+
+% Chinese.
+%
+% 方正字体授权（2016年2月起正式施行）: http://www.foundertype.com/index/release_info.html
+% \lyq{
+%  计算机字库的使用方式主要有以下三种：
+%    1. 内部使用：指个人或单位在其内部使用的终端设备上安装并使用字库的行为。该使用行为包括在屏幕上显示和临时从打印机上输出两种。
+%    2. 内置使用：指将字库文件整体或部分、直接或格式转换后，以嵌入的方式应用到网站、计算机程序或带有可视化显示功能的电子产品中的行为。
+%    3. 商业发布：指以直接营利或者间接营利为目的，将字体作为视觉设计要素，进行复制、发行、展览、放映、信息网络传播、广播等使用字体的行为。
+%  }
+% \lyq{上述三种方式中 “商业发布”行为是字体应用最重要的一种方式。方正公司仅针对商业发布内容的最终所有者提供授权。}
+% \lyq{免费字体：包括四种字体：方正黑体、方正书宋、方正仿宋、方正楷体。针对“商业发布”这种使用方式免费。}
+%
+% 根据我的理解，由于“内置使用”弱于“商业发布”，这表示对“内置使用”这种方式的开源项目也免费。
+% 客服解释，这4个字体虽然商业使用免费，但字体文件仍需付费下载。GBK版每个字体5元。
+%
+% 另外：
+% 1. 既然我已经付费下载，获得它们的合法使用权；
+% 2. “商业发布”中，又允许“复制、发行”等行为。
+% 所以是不是可以说，我有权把这4个字体包含在自己的项目里，以任意方式（包括开源）发布，使所有从我这里获得这4个字体的人，
+% 也递推具有了“商业发布”的合法使用权，而不用再像我那样付费下载了？请熟悉这一块法律的朋友指教。
+\usepackage{xeCJK}
+\usepackage{zhnumber}
+\setCJKmainfont[BoldFont={方正黑体_GBK}, ItalicFont={方正楷体_GBK}]{方正书宋_GBK}
+\setCJKfamilyfont{fttitle}{方正黑体_GBK}
+\setCJKfamilyfont{ftfangsong}[Scale=1.03]{方正仿宋_GBK}
+\setCJKfamilyfont{ftkaiti}[Scale=1.03]{方正楷体_GBK}
+
+% SURSONG.TTF, 宋体-方正超大字符集, distributed with Windows XP Simplified Chinese version, Office 2003, etc.
+\setCJKfamilyfont{ftfallback}{Simsun (Founder Extended)}
+
+
+% Header & footer.
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\fancyhf{}
+\newcommand{\lyheaderimg}{}  % placeholder
+\chead{\raisebox{-4pt}{\includegraphics{img/\lyheaderimg}}}  % use outlined graphics
+\cfoot{\textcolor{DarkSlateGray}{\pagenofont - \thepage\ -}}
+
+\fancypagestyle{plain}{%
+\renewcommand{\headrule}{}
+\fancyhf{}
+\cfoot{\textcolor{DarkSlateGray}{\pagenofont - \thepage\ -}}
+}
+
+
+% Header rule.
+\newcommand{\lymakeheadrule}{%
+  \makebox[0pt][l]{\rule[0.55\baselineskip]{\headwidth}{0.4pt}}%
+  \rule[0.7\baselineskip]{\headwidth}{1pt}}
+
+\makeatletter
+\renewcommand{\headrule}{%
+  {\if@fancyplain\let\headrulewidth\plainheadrulewidth\fi%
+  \lymakeheadrule}}
+\makeatother
+
+\setlength{\headheight}{34pt}  % suppress fancyhdr warnings
+
+% Remove space before chapter title.
+\makeatletter
+\patchcmd{\@makechapterhead}{50}{0}{}{}
+\patchcmd{\@makeschapterhead}{50}{0}{}{}
+\makeatother
+
+% titlesec.
+\usepackage{titlesec}
+\titleformat{\chapter}[block]
+{\fontsize{\lyszchaptertitle}{\lyszchaptertitle * \real{1.2}}\selectfont\CJKfamily{fttitle}\filcenter}
+{第\zhnum{chapter}篇}
+{0.5em}{}
+
+\titleformat{\section}[block]
+{\fontsize{\lyszsectiontitle}{\lyszsectiontitle * \real{1.2}}\selectfont\CJKfamily{fttitle}}
+{\thesection}
+{1em}{}
+
+\titleformat{\subsection}[block]
+{\fontsize{\lyszsubsectiontitle}{\lyszsectiontitle * \real{1.2}}\selectfont\CJKfamily{fttitle}}
+{\thesubsection}
+{1em}{}
+
+\titlespacing*{\chapter}{0pt}{0pt}{30pt}
+
+% titletoc.
+\usepackage{titletoc}
+\titlecontents{chapter}
+  [0em]
+  {\bfseries}
+  {第\zhnumber{\thecontentslabel}篇\hspace{0.5em}}
+  {}
+  {\dotfill\textrm{\contentspage[{\bfseries\thecontentspage}]}}
+\titlecontents{section}
+  [2em]
+  {\bfseries}
+  {}
+  {}
+  {\dotfill\textrm{\contentspage[{\bfseries\thecontentspage}]}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Other tweaks.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\parindent}{\lyszbody * 2}
+\renewcommand{\baselinestretch}{1.4}
+\renewcommand{\labelitemii}{$\triangleright$}
+
+
+% Chinese names.
+\renewcommand{\contentsname}{目\qquad 录}
+\renewcommand{\listfigurename}{插\quad 图\quad 目\quad 录}
+\renewcommand{\listtablename}{表\quad 格\quad 目\quad 录}
+\renewcommand{\figurename}{图}
+\renewcommand{\tablename}{表}
+
+
+% Underlines.
+% color = gray, depth = 0.32em, thickness = 0.54pt
+\newcommand{\lybasiculine}{\bgroup\markoverwith{\textcolor{gray}{\rule[-0.32em]{1pt}{0.54pt}}}\ULon}
+
+% Don't join up with neighbors.
+\newcommand{\lyuline}[1]{%
+  \nobreak\hspace{0.1em}%
+  \lybasiculine{\kern-0.1em\hbox{#1\kern-0.1em}}%
+  \nobreak\hspace{0.1em}}
+
+\newcommand{\lydashuline}{\bgroup\markoverwith{%
+  \kern1.2pt\textcolor{gray}{\rule[-0.32em]{2.6pt}{0.54pt}}\kern1.2pt}%
+  \ULon}
+
+% Not used for now.
+%\newcommand{\lydbuline}{%
+%  \bgroup\markoverwith{%
+%  \textcolor{gray}{\rule[-0.25em]{1pt}{0.3pt}}%
+%  \llap{\textcolor{gray}{\rule[-0.35em]{1pt}{0.3pt}}}%
+%  }\ULon}
+
+
+% Keywords, quotations, etc.
+\newcommand{\lybit}[1]{\textbf{#1}}  % highlight to be explained
+\newcommand{\lykw}[1]{{\CJKfamily{ftkaiti}#1}}  % stressed keyword
+\newcommand{\lyq}[1]{{\CJKfamily{ftfangsong}#1}}  % inline quote
+\newcommand{\lychar}[1]{\lyuline{#1}} % character in text
+\newcommand{\lytopics}[1]{}  % processed by external script; use ，as separator
+
+\newcommand{\lycharname}[1]{\textbf{#1}}
+\newcommand{\lybook}[1]{\textbf{#1}}
+\newcommand{\lybooke}[1]{\textbf{#1}}
+
+
+% Labels and links.
+\makeatletter
+
+% Create a hypertarget with PDF bookmark location raised by one line.
+\newcommand{\lylabel}[1]{\Hy@raisedlink{\hypertarget{#1}{}}}
+
+% Links.
+\newcommand{\lycharlink}[2]{\hyperlink{#1}{\lyuline{#2}}}  % character
+
+% Double-underline is visually distracting. worthwhile or not
+% to highlight links to blobs? Revert to old style.
+%\newcommand{\lylink}[2]{\hyperlink{#1}{%
+%  \IfDecimal{#1}{\lydbuline{#2}}%  % blob
+%    {\lyuline{#2}}}}               % other
+\newcommand{\lylink}[2]{\hyperlink{#1}{{\lyuline{#2}}}}
+
+\newcommand{\lyref}[1]{\hyperlink{#1}{\tcbox[nobeforeafter, size=fbox, box align=base, colback=white, colframe=black!50, boxrule=0.36mm]{#1}}}  % \lyblob
+
+\newcommand{\lyurl}[2]{\href{#1}{\lydashuline{#2}}}  % Web page
+
+% Used by \lyblob. Create a raised hypertarget and add a PDF bookmark.
+\newcommand{\lyblobmark}[2][1]{\Hy@raisedlink{\hypertarget{#2}{}\pdfbookmark[#1]{#2}{#2}}}
+
+% Create a PDF bookmark directly; the default level is section.
+\def\lymunch#1{}
+\newcommand{\lypdfbookmark}[4][1]{%
+  #2#3{\phantomsection\Hy@writebookmark{}{#4}{\@currentHref}{#1}{toc}#4}}
+
+\makeatother
+
+
+% Environments.
+
+% Compact version of itemize and enumerate.
+\newenvironment{lyitemize}%
+{\begin{itemize}[leftmargin=*, topsep=0.32em]%
+  \setlength{\itemsep}{2pt}%
+  \setlength{\parskip}{2pt}}%
+{\end{itemize}}
+
+\newenvironment{lyenumerate}%
+{\begin{enumerate}[leftmargin=*, topsep=0.32em]%
+  \setlength{\itemsep}{2pt}%
+  \setlength{\parskip}{2pt}}%
+{\end{enumerate}}
+
+% Chinese poems quotation.
+\newenvironment{lyquotepoem}%
+{\begin{quotation}\CJKfamily{ftfangsong}}%
+{\end{quotation}}
+
+% English poems quotation.
+\newenvironment{lyquotepoeme}%
+{\begin{quotation}}%
+{\end{quotation}}
+
+% Paragraphs quotation.
+\newenvironment{lyquotepara}%
+{\begin{quotation}\CJKfamily{ftfangsong}}%
+{\end{quotation}}
+
+\newenvironment{lysignature}%
+{\vspace{2em}\begin{flushright}\itshape}%
+{\end{flushright}}
+
+
+% Blobs.
+\colorlet{lytextbackground}{black!10}
+\newtcolorbox[auto counter, number within=chapter]{lybaseblob}[1]{
+  breakable,
+  skin=enhanced jigsaw,
+  colback=white, colframe=lytextbackground, colbacktitle=lytextbackground, coltitle=black,
+  boxrule=0.5mm,
+  segmentation style={solid, line width=0.4mm},
+  phantom={\lyblobmark{\thetcbcounter}},
+  title=#1,
+  overlay unbroken and first ={
+    \node[anchor=north east, inner sep=0pt, outer sep=0pt] at ([xshift=-\marginparsep]frame.north west) {\tcbox[boxsep=0pt, left=1.8mm, right=1.8mm, top=1.8mm, bottom=1.8mm, colback=white, colframe=black!25]{\thetcbcounter}};
+  }
+}
+
+% Normal style.
+\newcommand{\lyblob}[3]{%
+  \begin{lybaseblob}{#1}%
+    \begin{lyitemize}
+    #2
+    \end{lyitemize}
+    \ifblank{#3}{}{\tcblower #3}%
+  \end{lybaseblob}%
+}
+
+% Free style.
+\newcommand{\lybloba}[3]{%
+  \begin{lybaseblob}{#1}%
+    #2%
+    \ifblank{#2}{\typeout{Empty upper part}}{}%
+    \ifblank{#3}{}{\tcblower #3}%
+  \end{lybaseblob}%
+}
+
+
+% Version info.
+\providecommand{\lycommitno}{0}
+\providecommand\buildnoaboly{0}
+\providecommand{\buildnoly}{0}
+\newcommand{\projectversionnumber}{v0.3.0}
+\newcommand{\versioninfoaboly}{\projectversionnumber+build.\buildnoaboly.commit.\lycommitno}
+\newcommand{\versioninfoly}{\projectversionnumber+build.\buildnoly.commit.\lycommitno}

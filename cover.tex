@@ -1,0 +1,91 @@
+\thispagestyle{empty}
+\pagenumbering{Alph}
+
+\newpagecolor{SkyBlue}\afterpage{\nopagecolor}
+
+\newcommand{\lycoverlinkcolor}{DarkSlateGray}
+
+\begin{center}
+\noindent
+
+\newfontfamily{\ftcvtitleen}{Linux Libertine O}
+\newfontfamily{\ftcvtexten}{Linux Libertine O}
+\setCJKfamilyfont{ftcvtitlezh}{方正黑体_GBK}
+\setCJKfamilyfont{ftcvmindmap}{方正楷体_GBK}
+
+
+% Title.
+\begin{tcolorbox}[
+  halign=center,
+  width=0.66\paperwidth,
+  boxrule=1mm,
+  boxsep=8mm,
+  colback=Beige,
+  colframe=WhiteSmoke,
+]
+{\fontsize{42pt}{42pt}\selectfont\CJKfamily{ftcvtitlezh}一 瓶 论 语}\\[20pt]
+{\fontsize{36pt}{36pt}\selectfont\ftcvtitleen A~~~Bottle~~~of~~~Lún~~~Yǔ}
+\end{tcolorbox}
+
+\vspace*{\stretch{1}}
+
+
+% Mindmap.
+{
+\newcommand{\mmscale}{0.81}
+\newcommand{\lycovernode}[2]{\hyperlink{#1}{\textcolor{\lycoverlinkcolor}{#2}}}
+
+\centering
+\CJKfamily{ftcvmindmap}
+\begin{tikzpicture}[
+  mindmap,
+  scale=\mmscale,
+  every node/.style={concept, scale=\mmscale},
+  concept color=Beige,
+  grow cyclic,
+  root concept/.append style={font={\fontsize{28pt}{28pt}\selectfont}},
+  level 1/.append style={level distance=4.5cm, sibling angle=90, font={\fontsize{28pt}{28pt}\selectfont}},
+  level 2/.append style={level distance=3cm, sibling angle=45, font={\fontsize{25pt}{25pt}\selectfont}}
+]
+  \node[root concept]{\lycovernode{topicjunzi}{君子}}
+    child{ node{\lycovernode{topicxue2}{学}}
+      child{ node{\lycovernode{topicwen2}{文}} }
+      child{ node{\lycovernode{topicyi4a}{艺}} }
+      child{ node{\lycovernode{topiczhi4a}{智}} }
+      child{ node{\lycovernode{topicheng2}{恒}} }
+    }
+    child{ node{\lycovernode{topiczheng4}{政}}
+      child{ node{\lycovernode{topiclian2}{廉}} }
+      child{ node{\lycovernode{topichui4}{惠}} }
+      child{ node{\lycovernode{topicyongren}{贤}} }  % 任人唯贤
+      child{ node{\lycovernode{topiczhong1}{忠}} }
+      child{ node{\lycovernode{topicde2}{德}} }
+    }
+    child{ node{\lycovernode{topicli3}{礼}}
+      child{ node{\lycovernode{topicshu4}{恕}} }
+      child{ node{\lycovernode{topicwen1}{温}} }
+      child{ node{\lycovernode{topicqian1}{谦}} }
+      child{ node{\lycovernode{topicjing4}{敬}} }
+    }
+    child{ node{\lycovernode{topicren2}{仁}}
+      child{ node{\lycovernode{topicxiao4}{孝}} }
+      child{ node{\lycovernode{topicyi4}{义}} }
+      child{ node{\lycovernode{topicxin4}{信}} }
+      child{ node{\lycovernode{topicyou3}{友}} }
+      child{ node{\lycovernode{topiczhi4}{志}} }
+    };
+\end{tikzpicture}
+}
+
+\vspace*{\stretch{1}}
+
+
+% Contact info.
+{
+\fontsize{20pt}{20pt}\selectfont\ftcvtexten
+\href{http://www.abolybook.org}{\textcolor{\lycoverlinkcolor}{www.abolybook.org}}\\[2pt]
+\href{mailto:abolybook@gmail.com}{\textcolor{\lycoverlinkcolor}{abolybook@gmail.com}}\\[12pt]
+\href{http://creativecommons.org/licenses/by-nc-nd/3.0/}{\textcolor{\lycoverlinkcolor}{\ccbyncnd}}
+}
+
+\end{center}

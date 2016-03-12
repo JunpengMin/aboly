@@ -1,0 +1,95 @@
+\documentclass[a4paper, openany, oneside, 12pt]{book}
+
+\input{style.tex}
+
+
+\usepackage{tikz}
+\usepackage{standalone}
+
+
+\usepackage[
+  unicode,
+  bookmarks=true,
+  bookmarksnumbered=true,
+  pdfpagemode=UseOutlines,
+  pdfstartview=FitH,
+  pdfpagelayout=OneColumn,
+  colorlinks=true,
+  allcolors=black,
+]{hyperref}
+
+\hypersetup{
+  pdftitle=一瓶论语,
+  pdfauthor=孔子 著，abolybook@gmail.com 译评及制作,
+  pdfsubject=,
+  pdfkeywords={\versioninfoaboly},
+  pdfcreator=LaTeX with Python,
+}
+
+
+%============================================================
+
+\begin{document}
+
+\lyblobmark[0]{一瓶论语}
+\include{cover}
+\include{license}
+
+\frontmatter
+
+% Enlarge inter-paragraph distance.
+\newlength{\oldparskip}
+\setlength{\oldparskip}{\parskip}
+\addtolength{\parskip}{0.12\baselineskip}
+
+\renewcommand{\lyheaderimg}{preface}
+\include{preface}
+
+\renewcommand{\lyheaderimg}{usage}
+\include{usage}
+
+\renewcommand{\lyheaderimg}{guide}
+%\include{guide}
+
+
+% Restore inter-paragraph distance.
+\setlength{\parskip}{\oldparskip}
+
+\lyblobmark[0]{目录}
+\tableofcontents  % The TOC is expected to appear on a single page,
+                  % otherwise a header image should be added for it.
+
+\mainmatter
+
+\renewcommand{\lyheaderimg}{chap\thechapter}
+\include{autobody}
+
+
+% Appendixes.
+\makeatother
+
+\titleformat{\chapter}[block]
+{\fontsize{\lyszchaptertitle}{\lyszchaptertitle * \real{1.2}}\selectfont\CJKfamily{fttitle}\filcenter}
+{}
+{1em}{}
+
+\titlecontents{chapter}
+  [0em]
+  {\bfseries}
+  {}
+  {}
+  {\dotfill\textrm{\contentspage[{\bfseries\thecontentspage}]}}
+
+
+\renewcommand{\lyheaderimg}{characters}
+\include{autocharacters}
+
+
+\renewcommand{\lyheaderimg}{topics}
+\include{autotopics}
+
+
+\renewcommand{\lyheaderimg}{references}
+\include{references}
+
+\end{document}

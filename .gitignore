@@ -1,0 +1,17 @@
+*.aux
+*.log
+*.out
+*.pyc
+*.toc
+
+aboly.pdf
+ly.pdf
+
+autobody.tex
+autocharacters.tex
+autolybody.tex
+autotopics.tex
+
+abolylog.txt
+buildnoaboly.txt
+buildnoly.txt

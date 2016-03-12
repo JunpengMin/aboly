@@ -1,0 +1,57 @@
+\documentclass[a4paper, openany, oneside, 12pt]{book}
+
+\input{style.tex}
+
+
+\newtcolorbox[auto counter, number within=chapter]{lybaseblobraw}{
+  skin=enhanced jigsaw,
+  colback=white, colframe=black!42,
+  boxrule=0.5mm,
+  phantom={\lyblobmark{\thetcbcounter}},
+  overlay unbroken and first ={
+    \node[anchor=north east, inner sep=0pt, outer sep=0pt] at ([xshift=-\marginparsep]frame.north west) {\tcbox[boxsep=0pt, left=1.8mm, right=1.8mm, top=1.8mm, bottom=1.8mm, colback=white, colframe=black!42]{\thetcbcounter}};
+  }
+}
+
+\newcommand{\lyblobraw}[1]{%
+\begin{lybaseblobraw}
+#1
+\end{lybaseblobraw}}
+
+
+\usepackage[
+  unicode,
+  bookmarks=true,
+  bookmarksnumbered=true,
+  pdfpagemode=UseOutlines,
+  pdfstartview=FitH,
+  pdfpagelayout=OneColumn,
+  colorlinks=true,
+  allcolors=black,
+]{hyperref}
+
+\hypersetup{
+  pdftitle=论语,
+  pdfauthor=孔子 著，abolybook@gmail.com 制作,
+  pdfsubject=,
+  pdfkeywords={\versioninfoly},
+  pdfcreator=LaTeX with Python,
+}
+
+
+%============================================================
+
+\begin{document}
+
+\lyblobmark[0]{论语}
+\input{coverly.tex}
+
+\frontmatter
+\lyblobmark[0]{目录}
+\tableofcontents
+
+\mainmatter
+\renewcommand{\lyheaderimg}{chap\thechapter}
+\include{autolybody}
+
+\end{document}
