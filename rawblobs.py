@@ -7,7 +7,9 @@ import sys
 import subprocess
 
 
-__all__ = ['rawblobs', 'rawblobs0']
+__all__ = ['titles', 'rawblobs', 'rawblobs0']
+
+titles = None
 
 # [('1.1', '...'), ...], without titles.
 rawblobs = None
@@ -18,11 +20,13 @@ rawblobs0 = None
 
 
 def init_rawblobs():
-    global rawblobs, rawblobs0
+    global titles, rawblobs, rawblobs0
+    titles = []
     rawblobs = []
     rawblobs0 = []
     INFILE = 'autolybody.tex'
     ENCODING = 'utf-8'
+    lytitle_re = re.compile(r'\\chapter{(.+?)}')
     lyblobraw_re = re.compile(r'\\lyblobraw\{(.+?)\}|\chapter\{', re.S)
 
     if subprocess.call([sys.executable, 'autolybody.py']) != 0:
@@ -30,6 +34,10 @@ def init_rawblobs():
 
     with io.open(INFILE, encoding=ENCODING) as fin:
         content = fin.read()
+
+    for mat in lytitle_re.finditer(content):
+        titles.append(mat.group(1))
+
     chapter = 0
     section = 0
     for mat in lyblobraw_re.finditer(content):
