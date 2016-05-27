@@ -62,13 +62,14 @@ def append_annotations(content, label_blobs):
     lines = content.splitlines(True)
     line_count = len(lines)
 
+    special_labels = set(('characters', 'zisi', 'shaogong', 'boyi', 'houyi', 'lijiliyun'))
     for i, line in enumerate(lines):
         if not line.isspace():
             line = line.lstrip()
             if line.startswith(LABEL_LINE_PREFIX):
                 left = line.index(LABEL_LINE_PREFIX) + len(LABEL_LINE_PREFIX)
                 label = line[left: line.index('}', left)]
-                if label in ('characters', 'zisi', 'shaogong', 'boyi', 'houyi', 'lijiliyun'):  # special cases
+                if label in special_labels:
                     continue
                 if i == line_count-1 or not lines[i+1].lstrip().startswith(CONTENT_LINE_PREFIX):
                     raise RuntimeError("Line %d of characters.tex is malformatted" % (i+2))

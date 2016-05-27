@@ -107,6 +107,10 @@ def validate_lyrefs(log):
     special_lyrefs = set((
         r'问\lylink{zhi4d',
     ))
+    special_lyqs = set((
+        r'吾不试，故艺',
+        r'君子无众寡，无小大',
+    ))
     labels, texts = zip(*rawblobs)
     lyref_tag = r'\lyref'
     # Ensure that \lyref is properly surrounded. Generate warnings.
@@ -146,7 +150,7 @@ def validate_lyrefs(log):
                                 text = text[:-1]
                             snippets = text.split('……')
                             if any(s not in texts[index] for s in snippets):
-                                if '吾不试，故艺' in text:  # special case for quotation mark mismatch
+                                if any(s in text for s in special_lyqs):
                                     continue
                                 log.error(r'Incorrect \lyref quoted text on line %d of %s', lineno+1, infile)
                                 log.error(text)

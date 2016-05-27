@@ -14,11 +14,11 @@ AUTOTOPICS = 'autotopics.tex'
 #SUMMARY = 'topics.txt'
 ENCODING = 'utf-8'
 INSERSION_POINT = 'INSERSION_POINT'
-TOPIC_TEMPLATE = '\\textbf{%s}（%d章）%s\n\n'
+TOPIC_TEMPLATE = '\\lytopic{%s}（%d章）：%s\n\n'
 SHORT_TOPICS_TEMPLATE = '%d章：%s\n\n'
-SHORT_TOPIC_T = '\\textbf{%s} %s'
+SHORT_TOPIC_T = '\\lytopic{%s} %s'
 SHORT_TOPIC_THRESHOLD = 3
-SHORT_TOPICS_SEP = r'\quad{}'
+SHORT_TOPICS_SEP = r'\quad '
 
 
 # Retain tones.

@@ -89,8 +89,9 @@
 \setCJKfamilyfont{ftfangsong}[Scale=1.03]{方正仿宋_GBK}
 \setCJKfamilyfont{ftkaiti}[Scale=1.03]{方正楷体_GBK}
 
+\newcommand\lyqemph[1]{{\CJKfontspec{方正楷体_GBK}#1}}
 % SURSONG.TTF, 宋体-方正超大字符集, distributed with Windows XP Simplified Chinese version, Office 2003, etc.
-\setCJKfamilyfont{ftfallback}{Simsun (Founder Extended)}
+\newcommand\lyextended[1]{{\CJKfontspec{Simsun (Founder Extended)}#1}}
 
 
 % Header & footer.
@@ -171,6 +172,8 @@
 \renewcommand{\baselinestretch}{1.4}
 \renewcommand{\labelitemii}{$\triangleright$}
 
+\newcommand{\lysetparindent}[2]{{\setlength{\parindent}{#1}#2}}
+
 
 % Chinese names.
 \renewcommand{\contentsname}{目\qquad 录}
@@ -203,12 +206,17 @@
 
 
 % Keywords, quotations, etc.
-\newcommand{\lybit}[1]{\textbf{#1}}  % highlight to be explained
+\newcommand{\lyterm}[1]{\textbf{#1}}  % word or phrase to be explained
 \newcommand{\lykw}[1]{{\CJKfamily{ftkaiti}#1}}  % stressed keyword
 \newcommand{\lyq}[1]{{\CJKfamily{ftfangsong}#1}}  % inline quote
+\newcommand{\lyqe}[1]{#1}      % English inline quote
+\newcommand{\lyl}[1]{【例】#1}  % example
+\newcommand{\lyc}[1]{【参】#1}  % cf (see also)
 \newcommand{\lychar}[1]{\lyuline{#1}} % character in text
 \newcommand{\lytopics}[1]{}  % processed by external script; use ，as separator
+\newcommand{\lytopic}[1]{\textbf{#1}}
 \newcommand{\lycenterpar}[1]{\noindent\begin{center}#1\end{center}}
+\newcommand{\lyconvskip}[1]{#1}  % ignored by ANTLR's conversion
 
 \newcommand{\lycharname}[1]{\textbf{#1}}
 \newcommand{\lybook}[1]{\textbf{#1}}
@@ -233,7 +241,8 @@
 
 \newcommand{\lyref}[1]{\hyperlink{#1}{\tcbox[nobeforeafter, size=fbox, box align=base, colback=white, colframe=black!50, boxrule=0.36mm]{#1}}}  % \lyblob
 
-\newcommand{\lyurl}[2]{\href{#1}{\lydashuline{#2}}}  % Web page
+\newcommand{\lyurl}[2]{\href{#1}{\lydashuline{#2}}}
+\newcommand{\lyurladdr}[2]{\href{#1}{#2}}  % direct URL address, no decoration
 
 % Used by \lyblob. Create a raised hypertarget and add a PDF bookmark.
 \newcommand{\lyblobmark}[2][1]{\Hy@raisedlink{\hypertarget{#2}{}\pdfbookmark[#1]{#2}{#2}}}
@@ -323,3 +332,4 @@
 \newcommand{\projectversionnumber}{v0.3.0}
 \newcommand{\versioninfoaboly}{\projectversionnumber+build.\buildnoaboly.commit.\lycommitno}
 \newcommand{\versioninfoly}{\projectversionnumber+build.\buildnoly.commit.\lycommitno}
+
