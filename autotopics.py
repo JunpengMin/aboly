@@ -106,6 +106,7 @@ topic_labels = {
     # Others.
     '未见': 'topicweijian',
     '快乐': 'topickuaile',
+    '人我': 'topicrenwo',
 }
 
 

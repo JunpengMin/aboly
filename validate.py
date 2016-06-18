@@ -114,7 +114,7 @@ def validate_lyrefs(log):
     labels, texts = zip(*rawblobs)
     lyref_tag = r'\lyref'
     # Ensure that \lyref is properly surrounded. Generate warnings.
-    delims = r' （）【】。，、：；！—}'
+    delims = r' （）【】。，、：；！—{}'
     re_lyref_before = re.compile(r'(?<![%s])\\lyref\{[0-9.]+?\}' % delims)
     re_lyref_after = re.compile(r'\\lyref\{[0-9.]+?\}(?![%s])' % delims)
     # Ensure that \lyref is properly structed.
@@ -177,7 +177,7 @@ def validate_lywords(log):
         'lymph', 'lymphatic', 'lymphocyte', 'lymphoid', 'lymphoma', 'lynch',
         'lyncher', 'lynching', 'lynx', 'lynx-eyed', 'lyre', 'lyric', 'lyrical',
         'lyrically', 'lyricism', 'lyricist', 'lyrics',
-        'lyitemize', 'lyenumerate', 'lyquotepoem', 'lyquotepoeme', 'lyquotepara', 'lytextbackground'))  # custom words
+        'lyblobitemize', 'lyitemize', 'lyenumerate', 'lyquotepoem', 'lyquotepoeme', 'lyquotepara', 'lytextbackground'))  # custom words
     re_lycmd = re.compile(r'\b(ly[a-z]*)', re.I)
 
     valid = True

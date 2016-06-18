@@ -13,7 +13,7 @@ don't hesitate to dive in!
 
 Any feedback is welcome, in Chinese, English, or one that [Google Translate](http://translate.google.com) handles nicely.
 
-Web site (Chinese, under construction): http://www.abolybook.org
+Web site (Chinese): http://www.abolybook.org
 
 ------
 
@@ -32,4 +32,4 @@ Web site (Chinese, under construction): http://www.abolybook.org
 - xelatex，调用的包和字体，见 style.tex
 - Python，2.7和3.5皆可，调用了 [pinyin](https://pypi.python.org/pypi/pinyin/)
 
-网站（建设中）：http://www.abolybook.org
+网站：http://www.abolybook.org

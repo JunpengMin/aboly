@@ -216,7 +216,7 @@
 \newcommand{\lytopics}[1]{}  % processed by external script; use ，as separator
 \newcommand{\lytopic}[1]{\textbf{#1}}
 \newcommand{\lycenterpar}[1]{\noindent\begin{center}#1\end{center}}
-\newcommand{\lyconvskip}[1]{#1}  % ignored by ANTLR's conversion
+\newcommand{\lyalt}[2]{#1}   % LaTeX uses #1, translator uses #2
 
 \newcommand{\lycharname}[1]{\textbf{#1}}
 \newcommand{\lybook}[1]{\textbf{#1}}
@@ -264,6 +264,11 @@
   \setlength{\parskip}{2pt}}%
 {\end{itemize}}
 
+% Same as lyitemize, used for annotation purpose only.
+\newenvironment{lyblobitemize}%
+{\begin{lyitemize}}%
+{\end{lyitemize}}
+
 \newenvironment{lyenumerate}%
 {\begin{enumerate}[leftmargin=*, topsep=0.32em]%
   \setlength{\itemsep}{2pt}%
@@ -308,9 +313,9 @@
 % Normal style.
 \newcommand{\lyblob}[3]{%
   \begin{lybaseblob}{#1}%
-    \begin{lyitemize}
+    \begin{lyblobitemize}
     #2
-    \end{lyitemize}
+    \end{lyblobitemize}
     \ifblank{#3}{}{\tcblower #3}%
   \end{lybaseblob}%
 }

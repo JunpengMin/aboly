@@ -20,16 +20,17 @@ def extract_blob_title(content):
     return content[left:right]
 
 
-def get_label_blobs(content):
+def get_charname_blobs(content):
+    '''Return a dict of character names to lists of blob labels.'''
     CHAPTER_PREFIX = r'\chapter'
     BLOB_PREFIX = r'\lyblob'
     BLOB_TEMPLATE = '%d.%d'
-    LABEL_PAT = re.compile(r'\lycharlink\{(.+?)\}\{.+?\}')
+    CHARNAME_PAT = re.compile(r'\lycharlink\{(.+?)\}\{.+?\}')
     chapter_count = 0
     blob_count = 0
 
     lines = content.splitlines(True)
-    lbs = {}
+    c2bs = {}
     for i, line in enumerate(lines):
         if line.lstrip().startswith(CHAPTER_PREFIX):
             chapter_count += 1
@@ -39,53 +40,69 @@ def get_label_blobs(content):
             left = content.index(line)
             assert content[left+len(line):].find(line) == -1  # no duplicate \lyblob line
             title = extract_blob_title(content[left:])
-            mats = LABEL_PAT.finditer(title)
+            mats = CHARNAME_PAT.finditer(title)
             if mats:
                 blob = BLOB_TEMPLATE % (chapter_count, blob_count)
-                if blob == BLOB_TEMPLATE % (11, 3):  # NOTE: skip 四科十哲
-                    continue
+                # if blob == BLOB_TEMPLATE % (11, 3):  # skip 四科十哲
+                #     continue
                 for m in mats:
-                    label = m.group(1)
-                    if label not in lbs:
-                        lbs[label] = [blob]
+                    charname = m.group(1)
+                    if charname not in c2bs:
+                        c2bs[charname] = [blob]
                     else:
-                        if blob not in lbs[label]:
-                            lbs[label].append(blob)
-    return lbs
+                        if blob not in c2bs[charname]:
+                            c2bs[charname].append(blob)
+    return c2bs
 
 
-def append_annotations(content, label_blobs):
-    LABEL_LINE_PREFIX = r'\lylabel{'
-    CONTENT_LINE_PREFIX = r'\lycharname{'
-    STOP_PREFIXES = {LABEL_LINE_PREFIX, r'\lypdfbookmark'}
-    ANNOTATION_TEMPLATE = r'\lyref{%s}'
-    lines = content.splitlines(True)
-    line_count = len(lines)
+def append_annotation(seg, annotation):
+    insert_pos = len(seg)
+    while seg[insert_pos-1].isspace():
+        insert_pos -= 1
+    return seg[:insert_pos] + annotation + seg[insert_pos:]
 
-    special_labels = set(('characters', 'zisi', 'shaogong', 'boyi', 'houyi', 'lijiliyun'))
-    for i, line in enumerate(lines):
-        if not line.isspace():
-            line = line.lstrip()
-            if line.startswith(LABEL_LINE_PREFIX):
-                left = line.index(LABEL_LINE_PREFIX) + len(LABEL_LINE_PREFIX)
-                label = line[left: line.index('}', left)]
-                if label in special_labels:
-                    continue
-                if i == line_count-1 or not lines[i+1].lstrip().startswith(CONTENT_LINE_PREFIX):
-                    raise RuntimeError("Line %d of characters.tex is malformatted" % (i+2))
-                j = i+1
-                while j != line_count-1 and all(not lines[j].startswith(sp) for sp in STOP_PREFIXES):
-                    j += 1
-                j -= 1
-                while lines[j] == '' or lines[j].isspace() or lines[j].lstrip().startswith('%'):
-                    j -= 1
-                blobs = label_blobs[label]
-                lines[j] += ' '.join(ANNOTATION_TEMPLATE % b for b in blobs) + '\n'
-    return ''.join(lines)
+
+def append_annotations(content, charname_blobs):
+    removecomment_pat = re.compile(r'(?<!\\)%.+', re.M)
+    content = removecomment_pat.sub('', content)
+
+    charlabel_pat = re.compile(r'(?:^\\lypdfbookmark)|(?:^\\lylabel\{(\w+)\})', re.M)
+    skip_labels = set(('zisi', 'shaogong', 'boyi', 'lijiliyun'))
+    segs = []
+    pos = 0
+    label, copy = '', True
+    for mat in charlabel_pat.finditer(content):
+        start = mat.start()
+        seg = content[pos: start]
+        pos = start
+        if copy:
+            segs.append(seg)
+        else:
+            blobs = charname_blobs[label]
+            annotation = ' ' + ' '.join(r'\lyref{%s}' % b for b in blobs)
+            segs.append(append_annotation(seg, annotation))
+        if mat.group() == r'\lypdfbookmark':
+            copy = True
+            continue
+        label = mat.group(1)
+        if label in skip_labels:
+            copy = True
+            skip_labels.remove(label)
+        else:
+            copy = False
+    seg = content[pos:]
+    if copy:
+        segs.append(seg)
+    else:
+        blobs = charname_blobs[label]
+        annotation = ' ' + ' '.join(r'\lyref{%s}' % b for b in blobs)
+        segs.append(append_annotation(seg, annotation))
+    assert not skip_labels
+    return ''.join(segs)
 
 
 def main():
-    AUTOBODY = 'autobody.tex'  # deals with \lycharlink{tag}{name} in \lyblob's
+    AUTOBODY = 'autobody.tex'  # parse \lycharlink{tag}{name} in \lyblob's
     CHARACTERS = 'characters.tex'
     CHARACTERS_OUT = 'autocharacters.tex'
     ENCODING = 'utf-8'
@@ -94,8 +111,8 @@ def main():
     with io.open(CHARACTERS, encoding=ENCODING) as fin:
         characters_content = fin.read()
 
-    label_blobs = get_label_blobs(body)
-    auto_characters_content = append_annotations(characters_content, label_blobs)
+    charname_blobs = get_charname_blobs(body)
+    auto_characters_content = append_annotations(characters_content, charname_blobs)
 
     with io.open(CHARACTERS_OUT, 'w', encoding=ENCODING) as fout:
         fout.write(auto_characters_content)
