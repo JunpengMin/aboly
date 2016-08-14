@@ -15,7 +15,7 @@ titles = None
 rawblobs = None
 
 # Chinese characters only, without punctuation marks.
-# sum(len(b[1]) for b in rawblobs0) -> 15915
+# sum(len(b[1]) for b in rawblobs0) -> 15916
 rawblobs0 = None
 
 
