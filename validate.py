@@ -108,8 +108,9 @@ def validate_lyrefs(log):
         r'问\lylink{zhi4d',
     ))
     special_lyqs = set((
-        r'吾不试，故艺',
-        r'君子无众寡，无小大',
+        '吾不试，故艺',
+        '君子无众寡，无小大',
+        '君子疾夫舍曰',
     ))
     labels, texts = zip(*rawblobs)
     lyref_tag = r'\lyref'
