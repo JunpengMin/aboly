@@ -25,7 +25,7 @@ def get_charname_blobs(content):
     CHAPTER_PREFIX = r'\chapter'
     BLOB_PREFIX = r'\lyblob'
     BLOB_TEMPLATE = '%d.%d'
-    CHARNAME_PAT = re.compile(r'\lycharlink\{(.+?)\}\{.+?\}')
+    CHARNAME_PAT = re.compile(r'\\lycharlink\{(.+?)\}\{.+?\}')
     chapter_count = 0
     blob_count = 0
 

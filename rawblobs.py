@@ -27,7 +27,7 @@ def init_rawblobs():
     INFILE = 'autolybody.tex'
     ENCODING = 'utf-8'
     lytitle_re = re.compile(r'\\chapter{(.+?)}')
-    lyblobraw_re = re.compile(r'\\lyblobraw\{(.+?)\}|\chapter\{', re.S)
+    lyblobraw_re = re.compile(r'\\lyblobraw\{(.+?)\}|\\chapter\{', re.S)
 
     if subprocess.call([sys.executable, 'autolybody.py']) != 0:
         raise RuntimeError('Failed to generate %s' % INFILE)
