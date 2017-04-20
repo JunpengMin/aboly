@@ -107,6 +107,8 @@ topic_labels = {
     '未见': 'topicweijian',
     '快乐': 'topickuaile',
     '人我': 'topicrenwo',
+    '孔子自评': 'topickongziziping',
+    '人评孔子': 'topicrenpingkongzi',
 }
 
 

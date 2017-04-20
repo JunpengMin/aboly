@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # coding: utf-8
 
 from __future__ import unicode_literals, print_function
@@ -7,8 +8,8 @@ import sys
 
 
 def main():
-    BUILD_CMD = r'xelatex "\newcommand{\buildnoly}{%d} \newcommand{\lycommitno}{%s} \input{ly.tex}"'
-    COMMITNO_CMD = r'git rev-parse HEAD'
+    BUILD_CMD = ['xelatex', r'\newcommand{\buildnoly}{%d} \newcommand{\lycommitno}{%s} \input{ly.tex}']
+    COMMITNO_CMD = ['git', 'rev-parse', 'HEAD']
     BUILDNO_FILE = 'buildnoly.txt'  # shabby toy of my own; not included in the GitHub project
 
     if subprocess.call([sys.executable, 'autolybody.py']) != 0:
@@ -27,7 +28,8 @@ def main():
         commitno = subprocess.check_output(COMMITNO_CMD).strip().decode('ascii')
     except subprocess.CalledProcessError:
         commitno = 0
-    r = subprocess.call(BUILD_CMD % (buildno, commitno))
+    BUILD_CMD[1] = BUILD_CMD[1] % (buildno, commitno)
+    r = subprocess.call(BUILD_CMD)
     if r == 0 and use_buildno_file:
         with open(BUILDNO_FILE, 'w') as fout:
             fout.write(str(buildno))

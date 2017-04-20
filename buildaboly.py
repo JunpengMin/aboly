@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # coding: utf-8
 
 from __future__ import unicode_literals, print_function
@@ -10,8 +11,8 @@ import validate
 
 
 def main():
-    BUILD_CMD = r'xelatex "\newcommand\buildnoaboly{%d} \newcommand{\lycommitno}{%s} \input{aboly.tex}"'
-    COMMITNO_CMD = r'git rev-parse HEAD'
+    BUILD_CMD = ['xelatex', r'\newcommand\buildnoaboly{%d} \newcommand{\lycommitno}{%s} \input{aboly.tex}']
+    COMMITNO_CMD = ['git', 'rev-parse', 'HEAD']
     BUILDNO_FILE = 'buildnoaboly.txt'  # shabby toy of my own; not included in the GitHub project
     LOG_FILE = 'abolylog.txt'
 
@@ -47,7 +48,8 @@ def main():
     except subprocess.CalledProcessError:
         log.warning('No commit number')
         commitno = 0
-    r = subprocess.call(BUILD_CMD % (buildno, commitno))
+    BUILD_CMD[1] = BUILD_CMD[1] % (buildno, commitno)
+    r = subprocess.call(BUILD_CMD)
     if r != 0:
         log.error('Failed to build aboly with error code %d', r)
     elif use_buildno_file:

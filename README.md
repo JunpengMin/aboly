@@ -30,6 +30,6 @@ Web site (Chinese): http://www.abolybook.org
 编译用到了：
 
 - xelatex，调用的包和字体，见 style.tex
-- Python，2.7和3.5皆可，调用了 [pinyin](https://pypi.python.org/pypi/pinyin/)
+- Python，2.7和3皆可，调用了 [pinyin](https://pypi.python.org/pypi/pinyin/)
 
 网站：http://www.abolybook.org

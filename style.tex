@@ -303,6 +303,7 @@
   colback=white, colframe=lytextbackground, colbacktitle=lytextbackground, coltitle=black,
   boxrule=0.5mm,
   segmentation style={solid, line width=0.4mm},
+  after skip=1em,
   phantom={\lyblobmark{\thetcbcounter}},
   title=#1,
   overlay unbroken and first ={
@@ -320,7 +321,7 @@
   \end{lybaseblob}%
 }
 
-% Free style.
+% Free (arbitrary) style.
 \newcommand{\lybloba}[3]{%
   \begin{lybaseblob}{#1}%
     #2%
