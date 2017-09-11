@@ -22,6 +22,9 @@ SHORT_TOPICS_SEP = r'\quad '
 
 
 # Retain tones.
+# NOTE: As of pinyin v0.4.0, pinyin.get() defaults to get pinyin with tones, so hack_pinyin()
+# is essentially useless. But unfortunately, '尚书' would be incorrectly ordered before '善人',
+# using 'cháng' for '尚'. hack_pinyin() happens to circumvent this issue, so let's keep it.
 def hack_pinyin():
     dat = os.path.join(os.path.dirname(pinyin.__file__), "Mandarin.dat")
     pinyin.pinyin.pinyin_dict = {}
