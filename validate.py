@@ -111,6 +111,8 @@ def validate_lyrefs(log):
         '吾不试，故艺',
         '君子无众寡，无小大',
         '君子疾夫舍曰',
+        '子曰：“莫我知也夫！……不怨天，不尤人。”',
+        '博施于民而能济众，……必也圣乎！尧舜其犹病诸！',
     ))
     labels, texts = zip(*rawblobs)
     lyref_tag = r'\lyref'

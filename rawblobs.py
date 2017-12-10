@@ -15,7 +15,6 @@ titles = None
 rawblobs = None
 
 # Chinese characters only, without punctuation marks.
-# sum(len(b[1]) for b in rawblobs0) -> 15916
 rawblobs0 = None
 
 
@@ -49,7 +48,7 @@ def init_rawblobs():
             chapter += 1
             section = 0
 
-    # Remove punctuation marks. Boundaries are manually picked. See below.
+    # Remove punctuation marks. Boundaries are manually picked. See EOF.
     LOW, HIGH = ord(u'一'), ord(u'龟')
     for b in rawblobs:
         label, text = b
@@ -61,6 +60,21 @@ def init_rawblobs():
 
 
 init_rawblobs()
+
+
+if __name__ == '__main__':
+    nchars = sum(len(b[1]) for b in rawblobs0)
+    if len(sys.argv) == 2:  # TODO: called in LaTeX?
+        opt = sys.argv[1]
+        if opt == '-pian':
+            s = set(x[0].split('.')[0] for x in rawblobs)
+            print(len(s), end='')
+        elif opt == '-zhang':
+            print(len(rawblobs), end='')
+        elif opt == '-zi':
+            print(nchars, end='')
+    else:
+        print('%d Chinese characters in the text.' % nchars)
 
 
 # All characters sorted:
