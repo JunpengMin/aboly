@@ -88,21 +88,21 @@ topic_labels = {
     '义': 'topicyi4',
     '信': 'topicxin4',
     '友': 'topicyou3',
-    '志': 'topiczhi4',
-
-    '温': 'topicwen1',
-    '敬': 'topicjing4',
-    '谦': 'topicqian1',
     '恕': 'topicshu4',
 
+    '敬': 'topicjing4',
+    '谦': 'topicqian1',
+    '温': 'topicwen1',
+    '耻': 'topicchi3',
+
     '文': 'topicwen2',
-    '艺': 'topicyi4a',
+    '音乐': 'topicyinyue',  # 乐
     '智': 'topiczhi4a',
-    '恒': 'topicheng2',
+    '志': 'topiczhi4',
 
     '德': 'topicde2',
     '忠': 'topiczhong1',
-    '用人': 'topicyongren',
+    '用人': 'topicyongren',  # 贤
     '惠': 'topichui4',
     '廉': 'topiclian2',
 

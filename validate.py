@@ -7,7 +7,22 @@ import re
 from rawblobs import rawblobs
 
 
+# Configurations.
 ENCODING = 'utf-8'
+
+SPECIAL_LYREFS = (
+    r'问\lylink{zhi4d',
+)
+
+SPECIAL_LYQS = (
+    '吾不试，故艺',
+    '君子无众寡，无小大',
+    '君子疾夫舍曰',
+    '子曰：“莫我知也夫！……不怨天，不尤人。”',
+    '博施于民而能济众，……必也圣乎！尧舜其犹病诸！',
+    '君子……畏\lylink{tianming}{天命}，……小人不知天命而不畏也。',
+    '学《诗》乎？……不学《诗》，无以言。',
+)
 
 
 def validate_lylabels(log):
@@ -104,16 +119,8 @@ def validate_lyrefs(log):
         'references.tex',
         'usage.tex',
     )
-    special_lyrefs = set((
-        r'问\lylink{zhi4d',
-    ))
-    special_lyqs = set((
-        '吾不试，故艺',
-        '君子无众寡，无小大',
-        '君子疾夫舍曰',
-        '子曰：“莫我知也夫！……不怨天，不尤人。”',
-        '博施于民而能济众，……必也圣乎！尧舜其犹病诸！',
-    ))
+    special_lyrefs = set(SPECIAL_LYREFS)
+    special_lyqs = set(SPECIAL_LYQS)
     labels, texts = zip(*rawblobs)
     lyref_tag = r'\lyref'
     # Ensure that \lyref is properly surrounded. Generate warnings.
