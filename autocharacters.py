@@ -38,7 +38,7 @@ def get_charname_blobs(content):
         elif line.lstrip().startswith(BLOB_PREFIX):
             blob_count += 1
             left = content.index(line)
-            assert content[left+len(line):].find(line) == -1  # no duplicate \lyblob line
+            assert content[left + len(line):].find(line) == -1  # no duplicate \lyblob line
             title = extract_blob_title(content[left:])
             mats = CHARNAME_PAT.finditer(title)
             if mats:
@@ -57,7 +57,7 @@ def get_charname_blobs(content):
 
 def append_annotation(seg, annotation):
     insert_pos = len(seg)
-    while seg[insert_pos-1].isspace():
+    while seg[insert_pos - 1].isspace():
         insert_pos -= 1
     return seg[:insert_pos] + annotation + seg[insert_pos:]
 
@@ -115,7 +115,7 @@ def main():
     auto_characters_content = append_annotations(characters_content, charname_blobs)
 
     with io.open(CHARACTERS_OUT, 'w', encoding=ENCODING) as fout:
-        fout.write(auto_characters_content)
+        print(auto_characters_content, file=fout)
 
 
 if __name__ == '__main__':
