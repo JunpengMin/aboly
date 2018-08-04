@@ -11,9 +11,9 @@ If you want to:
 
 don't hesitate to dive in!
 
-Any feedback is welcome, in Chinese, English, or one that [Google Translate](http://translate.google.com) handles nicely.
+Any feedback is welcome, in Chinese, English, or one that [Google Translate](https://translate.google.com) handles nicely.
 
-Web site (Chinese): http://www.abolybook.org
+Web site (Chinese): https://www.abolybook.org
 
 ------
 
@@ -25,11 +25,11 @@ Web site (Chinese): http://www.abolybook.org
 下载：
 
 - GitHub：https://github.com/abolybook/aboly/releases
-- 百度网盘备份：http://pan.baidu.com/s/1eRp6vMq
+- 百度网盘备份：https://pan.baidu.com/s/1eRp6vMq
 
 编译用到了：
 
 - xelatex，调用的包和字体，见 style.tex
 - Python，2.7和3皆可，调用了 [pinyin](https://pypi.python.org/pypi/pinyin/)
 
-在线版（更新较频繁）：http://www.abolybook.org
+在线版（更新较快）：https://www.abolybook.org

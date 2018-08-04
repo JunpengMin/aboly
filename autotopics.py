@@ -7,7 +7,6 @@ import pinyin  # for sorting keywords with same count of occurrences
 import re
 import sys
 
-
 BODY = 'body.tex'
 TOPICS = 'topics.tex'
 AUTOTOPICS = 'autotopics.tex'
@@ -31,7 +30,8 @@ def hack_pinyin():
     with io.open(dat) as f:
         for line in f:
             k, v = line.strip().split('\t')
-            pinyin.pinyin.pinyin_dict[k] = v.lower().split(" ")[0]  # don't strip tones
+            pinyin.pinyin.pinyin_dict[k] = v.lower().split(" ")[
+                0]  # don't strip tones
 
 
 def extract_topics():
@@ -63,7 +63,10 @@ def extract_topics():
             match_count += 1
             blob_label = BLOB_TEMPLATE % (chapter_count, blob_count)
             if not mat.group(1):
-                print('Line %d is an empty keyword list' % (lineno+1), line, file=sys.stderr)
+                print(
+                    'Line %d is an empty keyword list' % (lineno + 1),
+                    line,
+                    file=sys.stderr)
                 continue
             for c in mat.group(1).split(sep):
                 if c not in topics:
@@ -72,7 +75,8 @@ def extract_topics():
                     topics[c].append(blob_label)
     totalblobs = content.count(BLOB_PREFIX)
     if match_count != totalblobs:
-        print('Found %d keyword lists for %d blobs' % (match_count, totalblobs))
+        print(
+            'Found %d keyword lists for %d blobs' % (match_count, totalblobs))
     return topics
 
 
@@ -83,23 +87,19 @@ topic_labels = {
     '礼': 'topicli3',
     '学': 'topicxue2',
     '政': 'topiczheng4',
-
     '孝': 'topicxiao4',
     '义': 'topicyi4',
     '信': 'topicxin4',
     '友': 'topicyou3',
     '恕': 'topicshu4',
-
     '敬': 'topicjing4',
     '谦': 'topicqian1',
     '温': 'topicwen1',
     '耻': 'topicchi3',
-
     '文': 'topicwen2',
     '音乐': 'topicyinyue',  # 乐
     '智': 'topiczhi4a',
     '志': 'topiczhi4',
-
     '德': 'topicde2',
     '忠': 'topiczhong1',
     '用人': 'topicyongren',  # 贤
@@ -107,6 +107,7 @@ topic_labels = {
     '廉': 'topiclian2',
 
     # Others.
+    '直': 'topiczhi2',
     '未见': 'topicweijian',
     '快乐': 'topickuaile',
     '人我': 'topicrenwo',
@@ -128,23 +129,22 @@ def dump_topics(topics):
             segment = sorted_counts[start:stop]
             segment.sort(key=lambda x: pinyin.get(x[0]))
             sorted_counts[start:stop] = segment
-        start, stop = stop, stop+1
+        start, stop = stop, stop + 1
 
     # Dump topics.
     with io.open(TOPICS, encoding=ENCODING) as fin:
         template = fin.read()
     with io.open(AUTOTOPICS, 'w', encoding=ENCODING) as fout:
         insersion = template.index(INSERSION_POINT)
-        prolog, epilog = template[:insersion], template[insersion+len(INSERSION_POINT):]
+        prolog, epilog = template[:insersion], template[insersion +
+                                                        len(INSERSION_POINT):]
         fout.write(prolog)
         for i, x in enumerate(sorted_counts):
             k, v = x
             if v <= SHORT_TOPIC_THRESHOLD:
                 break
-            topic = TOPIC_TEMPLATE % (
-                k, v,
-                ' '.join(
-                    BLOB_REF % v for v in topics[k]))
+            topic = TOPIC_TEMPLATE % (k, v, ' '.join(BLOB_REF % v
+                                                     for v in topics[k]))
             if k in topic_labels:
                 topic = '\\lylabel{%s}\n%s' % (topic_labels[k], topic)
             fout.write(topic)
@@ -155,11 +155,13 @@ def dump_topics(topics):
             sts = []
             while i < sclen and sorted_counts[i][1] == count:
                 k = sorted_counts[i][0]
-                sts.append(SHORT_TOPIC_T % (k, ' '.join(BLOB_REF % v for v in topics[k])))
+                sts.append(SHORT_TOPIC_T % (k, ' '.join(BLOB_REF % v
+                                                        for v in topics[k])))
                 i += 1
             line = SHORT_TOPICS_TEMPLATE % (count, SHORT_TOPICS_SEP.join(sts))
             fout.write(line)
         fout.write(epilog)
+
 
 #    # Dump summary.
 #    summary = '\n'.join('%s\t%d' % (v[0], v[1]) for v in sorted_counts)

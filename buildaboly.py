@@ -11,7 +11,10 @@ import validate
 
 
 def main():
-    BUILD_CMD = ['xelatex', r'\newcommand\buildnoaboly{%d} \newcommand{\lycommitno}{%s} \input{aboly.tex}']
+    BUILD_CMD = [
+        'xelatex',
+        r'\newcommand\buildnoaboly{%d} \newcommand{\lycommitno}{%s} \input{aboly.tex}'
+    ]
     COMMITNO_CMD = ['git', 'rev-parse', 'HEAD']
     BUILDNO_FILE = 'buildnoaboly.txt'  # shabby toy of my own; not included in the GitHub project
     LOG_FILE = 'abolylog.txt'
@@ -44,7 +47,8 @@ def main():
             log.warning('No build number')
             use_buildno_file = False
     try:
-        commitno = subprocess.check_output(COMMITNO_CMD).strip().decode('ascii')
+        commitno = subprocess.check_output(COMMITNO_CMD).strip().decode(
+            'ascii')
     except subprocess.CalledProcessError:
         log.warning('No commit number')
         commitno = 0

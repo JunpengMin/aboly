@@ -6,7 +6,6 @@ import re
 import sys
 import subprocess
 
-
 __all__ = ['titles', 'rawblobs', 'rawblobs0']
 
 titles = None
@@ -61,7 +60,6 @@ def init_rawblobs():
 
 init_rawblobs()
 
-
 if __name__ == '__main__':
     nchars = sum(len(b[1]) for b in rawblobs0)
     if len(sys.argv) == 2:  # TODO: called in LaTeX?
@@ -75,7 +73,6 @@ if __name__ == '__main__':
             print(nchars, end='')
     else:
         print('%d Chinese characters in the text.' % nchars)
-
 
 # All characters sorted:
 # —‘’“”、。《》一七万丈三上下不与专且世丘东两丧中临为主举乃久义之乎乐乘九乞也

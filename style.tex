@@ -53,7 +53,9 @@
 
 \font\pagenofont = "Linux Libertine O" at \lyszpageno  % for page numbers
 
-% Pinyin. The second tone marks of "Linux Libertine O" is upside-down for the Chinese.
+% Pinyin, in Source Han Sans:
+% https://github.com/adobe-fonts/source-han-sans/tree/release
+% The second tone marks of "Linux Libertine O" is upside-down for the Chinese.
 % Besides, it seems conventional to use a Sans Serif font for pinyin. Also good for labeling.
 % The cover page's pinyin won't be typeset in this style.
 \newfontfamily{\ftpinyin}[Scale=0.86]{Source Han Sans SC}
@@ -65,6 +67,7 @@
 % Chinese.
 %
 % 方正字体授权（2016年2月起正式施行）: http://www.foundertype.com/index/release_info.html
+% 2018-8-3，更新链接：https://www.foundertype.com/index.php/About/bookAuth/key/my_sysq.html
 % \lyq{
 %  计算机字库的使用方式主要有以下三种：
 %    1. 内部使用：指个人或单位在其内部使用的终端设备上安装并使用字库的行为。该使用行为包括在屏幕上显示和临时从打印机上输出两种。
@@ -90,8 +93,9 @@
 \setCJKfamilyfont{ftkaiti}[Scale=1.03]{方正楷体_GBK}
 
 \newcommand\lyqemph[1]{{\CJKfontspec{方正楷体_GBK}#1}}
-% SURSONG.TTF, 宋体-方正超大字符集, distributed with Windows XP Simplified Chinese version, Office 2003, etc.
-\newcommand\lyextended[1]{{\CJKfontspec{Simsun (Founder Extended)}#1}}
+% Extended characters, in Source Han Serif:
+% https://github.com/adobe-fonts/source-han-serif/tree/release
+\newcommand\lyextended[1]{{\CJKfontspec{Source Han Serif SC}#1}}
 
 
 % Header & footer.

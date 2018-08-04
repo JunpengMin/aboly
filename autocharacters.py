@@ -31,14 +31,15 @@ def get_charname_blobs(content):
 
     lines = content.splitlines(True)
     c2bs = {}
-    for i, line in enumerate(lines):
+    for line in lines:
         if line.lstrip().startswith(CHAPTER_PREFIX):
             chapter_count += 1
             blob_count = 0
         elif line.lstrip().startswith(BLOB_PREFIX):
             blob_count += 1
             left = content.index(line)
-            assert content[left + len(line):].find(line) == -1  # no duplicate \lyblob line
+            assert content[left + len(line):].find(
+                line) == -1  # no duplicate \lyblob line
             title = extract_blob_title(content[left:])
             mats = CHARNAME_PAT.finditer(title)
             if mats:
@@ -66,14 +67,15 @@ def append_annotations(content, charname_blobs):
     removecomment_pat = re.compile(r'(?<!\\)%.+', re.M)
     content = removecomment_pat.sub('', content)
 
-    charlabel_pat = re.compile(r'(?:^\\lypdfbookmark)|(?:^\\lylabel\{(\w+)\})', re.M)
+    charlabel_pat = re.compile(r'(?:^\\lypdfbookmark)|(?:^\\lylabel\{(\w+)\})',
+                               re.M)
     skip_labels = set(('zisi', 'shaogong', 'boyi', 'lijiliyun'))
     segs = []
     pos = 0
     label, copy = '', True
     for mat in charlabel_pat.finditer(content):
         start = mat.start()
-        seg = content[pos: start]
+        seg = content[pos:start]
         pos = start
         if copy:
             segs.append(seg)
@@ -112,7 +114,8 @@ def main():
         characters_content = fin.read()
 
     charname_blobs = get_charname_blobs(body)
-    auto_characters_content = append_annotations(characters_content, charname_blobs)
+    auto_characters_content = append_annotations(characters_content,
+                                                 charname_blobs)
 
     with io.open(CHARACTERS_OUT, 'w', encoding=ENCODING) as fout:
         print(auto_characters_content, file=fout)

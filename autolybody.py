@@ -17,7 +17,8 @@ def main():
     body = re.sub(r'\\lychar\{(.+?)\}', r'\1', body)
     body = re.sub(r'\\lycharlink\{.+\}\{(.+?)\}', r'\1', body)
     body = re.sub(r'\\lylink\{.+\}\{(.+?)\}', r'\1', body)
-    body = '\n\n\n'.join(re.findall(r'\\(?:chapter|lyblob)a?\{(?:.+?)\}', body, re.S))
+    body = '\n\n\n'.join(
+        re.findall(r'\\(?:chapter|lyblob)a?\{(?:.+?)\}', body, re.S))
     body = body.replace(r'\lybloba', r'\lyblob')
     body = body.replace(r'\lyblob', r'\lyblobraw')
 

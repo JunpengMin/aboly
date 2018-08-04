@@ -8,7 +8,10 @@ import sys
 
 
 def main():
-    BUILD_CMD = ['xelatex', r'\newcommand{\buildnoly}{%d} \newcommand{\lycommitno}{%s} \input{ly.tex}']
+    BUILD_CMD = [
+        'xelatex',
+        r'\newcommand{\buildnoly}{%d} \newcommand{\lycommitno}{%s} \input{ly.tex}'
+    ]
     COMMITNO_CMD = ['git', 'rev-parse', 'HEAD']
     BUILDNO_FILE = 'buildnoly.txt'  # shabby toy of my own; not included in the GitHub project
 
@@ -25,7 +28,8 @@ def main():
         except Exception:
             use_buildno_file = False
     try:
-        commitno = subprocess.check_output(COMMITNO_CMD).strip().decode('ascii')
+        commitno = subprocess.check_output(COMMITNO_CMD).strip().decode(
+            'ascii')
     except subprocess.CalledProcessError:
         commitno = 0
     BUILD_CMD[1] = BUILD_CMD[1] % (buildno, commitno)
