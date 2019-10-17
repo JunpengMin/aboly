@@ -13,6 +13,8 @@ import validate
 def main():
     BUILD_CMD = [
         'xelatex',
+        '-output-driver',
+        'xdvipdfmx -C 0x0010',
         r'\newcommand\buildnoaboly{%d} \newcommand{\lycommitno}{%s} \input{aboly.tex}'
     ]
     COMMITNO_CMD = ['git', 'rev-parse', 'HEAD']
@@ -52,7 +54,7 @@ def main():
     except subprocess.CalledProcessError:
         log.warning('No commit number')
         commitno = 0
-    BUILD_CMD[1] = BUILD_CMD[1] % (buildno, commitno)
+    BUILD_CMD[-1] = BUILD_CMD[-1] % (buildno, commitno)
     r = subprocess.call(BUILD_CMD)
     if r != 0:
         log.error('Failed to build aboly with error code %d', r)

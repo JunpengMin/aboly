@@ -10,7 +10,9 @@ import sys
 def main():
     BUILD_CMD = [
         'xelatex',
-        r'\newcommand{\buildnoly}{%d} \newcommand{\lycommitno}{%s} \input{ly.tex}'
+        '-output-driver',
+        'xdvipdfmx -C 0x0010',
+        r'\newcommand{\buildnoly}{%d} \newcommand{\lycommitno}{%s} \input{ly.tex}',
     ]
     COMMITNO_CMD = ['git', 'rev-parse', 'HEAD']
     BUILDNO_FILE = 'buildnoly.txt'  # shabby toy of my own; not included in the GitHub project
@@ -32,7 +34,7 @@ def main():
             'ascii')
     except subprocess.CalledProcessError:
         commitno = 0
-    BUILD_CMD[1] = BUILD_CMD[1] % (buildno, commitno)
+    BUILD_CMD[-1] = BUILD_CMD[-1] % (buildno, commitno)
     r = subprocess.call(BUILD_CMD)
     if r == 0 and use_buildno_file:
         with open(BUILDNO_FILE, 'w') as fout:
