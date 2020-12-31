@@ -39,7 +39,8 @@ def get_charname_blobs(content):
             blob_count += 1
             left = content.index(line)
             assert content[left + len(line):].find(
-                line) == -1  # no duplicate \lyblob line
+                line  # no duplicate \lyblob lines except one case
+            ) == -1 or '子曰：“巧言令色，鲜矣仁。”' in line
             title = extract_blob_title(content[left:])
             mats = CHARNAME_PAT.finditer(title)
             if mats:

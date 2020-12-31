@@ -29,7 +29,7 @@ Web site (Chinese): https://www.abolybook.org
 
 编译用到了：
 
-- xelatex，调用的包和字体，见 style.tex
-- Python，2.7和3皆可，调用了 [pinyin](https://pypi.python.org/pypi/pinyin/)
+- xelatex，调用的包和字体见 style.tex
+- Python 3，调用了 [pinyin](https://pypi.python.org/pypi/pinyin/)
 
 在线版（更新较快）：https://www.abolybook.org
